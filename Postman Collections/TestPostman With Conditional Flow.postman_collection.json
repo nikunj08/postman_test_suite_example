@@ -1,0 +1,402 @@
+{
+	"info": {
+		"name": "TestPostman With Conditional Flow",
+		"_postman_id": "26152fda-cbd8-40ce-6a78-08cbffdb83a2",
+		"description": "Testing postman features",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get DBZ Characters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "903595d0-6818-460b-9e13-67193593beae",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"First Object Name is: \" + jsonData.data[0].name, function () {",
+							"    pm.expect(jsonData.data[0].name).to.eql('goku');",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid ' + pm.response.code, function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"if (pm.response.code == 200 ){",
+							"postman.setNextRequest(\"Add DBZ Character\")",
+							"}",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}"
+				},
+				"description": "We will get the descriptions of DBZ Characters."
+			},
+			"response": []
+		},
+		{
+			"name": "Add DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d901826-ec79-4583-b98c-3f46d2d4d9d8",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"",
+							"if (pm.response.code == 200 ){",
+							"postman.setNextRequest(\"Get a specific DBZ Character\")",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": {{id}},\n        \"name\": \"{{name}}\",\n        \"race\": \"{{race}}\",\n        \"power_level\": \"{{power_level}}\",\n        \"status\": \"{{status}}\"\n        \n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:{{5000}}/add",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"add"
+					]
+				},
+				"description": "Add a character to DBZ list."
+			},
+			"response": []
+		},
+		{
+			"name": "Update DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77b6b0fe-69b5-4f12-8de6-0938af360457",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"data\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"          \"id\": {",
+							"            \"type\": \"integer\"",
+							"          },",
+							"          \"name\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"power_level\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"race\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"status\": {",
+							"            \"type\": \"string\"",
+							"          }",
+							"        }",
+							"      }",
+							"    },",
+							"    \"success\": {",
+							"      \"type\": \"boolean\"",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"if (pm.response.code == 200 ){",
+							"postman.setNextRequest(\"Delete DBZ Character\")",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": {{id}},\n        \"name\": \"{{name}}\",\n        \"race\": \"{{race}}\",\n        \"power_level\": \"{{power_level}}\",\n        \"status\": \"{{status}}\"\n        \n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:{{5000}}/update",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"update"
+					]
+				},
+				"description": "Update details a exisiting DBZ character."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29113efe-292c-4022-a2f8-7d44413c23c1",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"data\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"          \"id\": {",
+							"            \"type\": \"integer\"",
+							"          },",
+							"          \"name\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"power_level\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"race\": {",
+							"            \"type\": \"string\"",
+							"          },",
+							"          \"status\": {",
+							"            \"type\": \"string\"",
+							"          }",
+							"        }",
+							"      }",
+							"    },",
+							"    \"success\": {",
+							"      \"type\": \"boolean\"",
+							"    }",
+							"  }",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}/delete/{{name}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"delete",
+						"{{name}}"
+					]
+				},
+				"description": "Deleting a DBZ Character from list. "
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a768da3f-7a69-423e-a7e6-56ddc67f0c17",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"if (pm.response.code == 200 ){",
+							"postman.setNextRequest(\"Update DBZ Character\")",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}/get/{{name}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"get",
+						"{{name}}"
+					]
+				},
+				"description": "To get the details of any specific DBZ character."
+			},
+			"response": []
+		}
+	]
+}

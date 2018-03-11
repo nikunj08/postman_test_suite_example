@@ -1,0 +1,382 @@
+{
+	"info": {
+		"name": "TestPostman With Data",
+		"_postman_id": "2431d12a-b69e-c3f8-b2b9-9bab80194e0a",
+		"description": "Testing postman features",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get DBZ Characters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3bffccf4-5378-4e69-a4f6-b1d05e5395b2",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"First Object Name is: \" + jsonData.data[0].name, function () {",
+							"    pm.expect(jsonData.data[0].name).to.eql('goku');",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}"
+				},
+				"description": "We will get the descriptions of DBZ Characters."
+			},
+			"response": []
+		},
+		{
+			"name": "Add DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fdc7bf9b-cb8b-4844-8b0e-c219fb71f719",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": {{id}},\n        \"name\": \"{{name}}\",\n        \"race\": \"{{race}}\",\n        \"power_level\": \"{{power_level}}\",\n        \"status\": \"{{status}}\"\n        \n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:{{5000}}/add",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"add"
+					]
+				},
+				"description": "Add a character to DBZ list."
+			},
+			"response": []
+		},
+		{
+			"name": "Update DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9915961-4f14-4812-bfd3-cba182f25058",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": {{id}},\n        \"name\": \"{{name}}\",\n        \"race\": \"{{race}}\",\n        \"power_level\": \"{{power_level}}\",\n        \"status\": \"{{status}}\"\n        \n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:{{5000}}/update",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"update"
+					]
+				},
+				"description": "Update details a exisiting DBZ character."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29113efe-292c-4022-a2f8-7d44413c23c1",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"\t\"type\": \"object\",",
+							"\t\"properties\": {",
+							"\t\t\"data\": {",
+							"\t\t\t\"type\": \"array\",",
+							"\t\t\t\"items\": {",
+							"\t\t\t\t\"type\": \"object\",",
+							"\t\t\t\t\"properties\": {",
+							"\t\t\t\t\t\"id\": {",
+							"\t\t\t\t\t\t\"type\": \"integer\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"name\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"power_level\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"race\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t},",
+							"\t\t\t\t\t\"status\": {",
+							"\t\t\t\t\t\t\"type\": \"string\"",
+							"\t\t\t\t\t}",
+							"\t\t\t\t}",
+							"\t\t\t}",
+							"\t\t},",
+							"\t\t\"success\": {",
+							"\t\t\t\"type\": \"boolean\"",
+							"\t\t}",
+							"\t}",
+							"};",
+							"",
+							"",
+							"pm.test('Schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}/delete/{{name}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"delete",
+						"{{name}}"
+					]
+				},
+				"description": "Deleting a DBZ Character from list. "
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific DBZ Character",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bb50569-c2ee-4c42-af81-e8b87b60b87e",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}:{{5000}}/get/{{name}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{5000}}",
+					"path": [
+						"get",
+						"{{name}}"
+					]
+				},
+				"description": "To get the details of any specific DBZ character."
+			},
+			"response": []
+		}
+	]
+}
